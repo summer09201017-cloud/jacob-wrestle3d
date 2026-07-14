@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a1020" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E" />
+    <title>3D 雅各摔跤 Jacob Wrestling 3D</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <canvas id="gameCanvas" aria-label="3D 雅各摔跤遊戲畫面"></canvas>
+
+      <!-- 體力條(點數制,不是血) -->
+      <header class="fight-hud">
+        <div class="fighter-bar left">
+          <span class="fname" id="homeName">雅各</span>
+          <div class="stamina-track"><div class="stamina-fill" id="homeStamina"></div></div>
+          <div class="charge-track"><div class="charge-fill" id="homeCharge"></div></div>
+        </div>
+        <div class="round-mid">
+          <span id="roundLabel">R1</span>
+          <span id="winsLabel" class="mode-label">0 - 0</span>
+        </div>
+        <div class="fighter-bar right">
+          <span class="fname" id="awayName">那人(天使)</span>
+          <div class="stamina-track"><div class="stamina-fill away" id="awayStamina"></div></div>
+          <div class="charge-track"><div class="charge-fill" id="awayCharge"></div></div>
+        </div>
+      </header>
+
+      <div class="message-ribbon" id="statusMessage">選擇模式後開始比賽。</div>
+      <div class="commentary-bar" id="commentaryBar" hidden></div>
+      <div class="goal-flash" id="koFlash" hidden>力竭!</div>
+
+      <div class="touch-controls" id="touchControls">
+        <button id="touchBlock" class="touch-action alt">受身</button>
+        <button id="touchLight" class="touch-action alt">絆摔</button>
+        <button id="touchHeavy" class="touch-action alt">過肩摔</button>
+        <button id="touchKick" class="touch-action alt">掃腿摔</button>
+        <button id="touchSpecial" class="touch-action">蓄力大外摔</button>
+      </div>
+
+      <div class="hud-buttons">
+        <button id="menuButton">選單</button>
+        <button id="audioButton">音效開啟</button>
+        <button id="cameraButton">視角</button>
+      </div>
+
+      <div class="overlay-shell" id="matchOverlay">
+        <div class="overlay-card">
+          <p class="overlay-eyebrow">比賽結束</p>
+          <h2 id="overlayTitle">—</h2>
+          <p id="overlayText">—</p>
+          <div class="overlay-actions">
+            <button id="overlayMenuButton">回選單</button>
+            <button id="overlayReplayButton">再來一場</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-screen visible" id="homeScreen">
+        <div class="home-card">
+          <p class="home-eyebrow">GENESIS 32・毘努伊勒之夜</p>
+          <h1>3D 雅各摔跤 🌙</h1>
+          <p class="home-sub">雅博渡口只剩雅各一人——有一個人來和他摔跤,直到黎明!抓住不放,直到得祝福。(創32:24-31)</p>
+
+          <div class="mode-grid" id="modeCardGrid">
+            <button class="mode-card selected" data-mode="vsai">
+              <strong>🌙 與那人摔跤</strong><span>那人過肩摔前會亮出破綻——受身化解後反摔,摔到黎明!</span>
+            </button>
+            <button class="mode-card" data-mode="duel2p">
+              <strong>👥 雙人同機</strong><span>P1:A/D+J輕K重L踢S擋+空白蓄力 ・ P2:←→+1輕2重3踢0擋+Enter</span>
+            </button>
+          </div>
+
+          <div class="home-row">
+            <label for="roundsSelect">戰數</label>
+            <select id="roundsSelect">
+              <option value="1">一戰定勝負</option>
+              <option value="3" selected>三戰兩勝</option>
+              <option value="5">五戰三勝</option>
+            </select>
+            <label for="difficultySelect">難度</label>
+            <select id="difficultySelect">
+              <option value="kids">幼兒（超簡單）</option>
+              <option value="child">兒童（簡單）</option>
+              <option value="easy" selected>入門</option>
+              <option value="normal">標準</option>
+              <option value="hard">職業</option>
+              <option value="hell">🌅 黎明(天使全力)</option>
+            </select>
+            <label for="audioSelect">音效</label>
+            <select id="audioSelect">
+              <option value="on" selected>開啟</option>
+              <option value="off">靜音</option>
+            </select>
+          </div>
+
+          <p class="home-hint">A/D 進退 ・ J 絆摔 ・ K 過肩摔(會被受身反制)・ L 掃腿摔(距離最遠)・ 按住 S 受身 ・ 按住空白鍵蓄滿放開=大摔!把那人的體勢磨到零=「你與神與人較力,都得了勝」;贏了雅各會瘸著腿領受祝福、改名以色列。</p>
+          <button class="start-button" id="startMatchButton">開始比賽</button>
+        </div>
+      </div>
+      <div class="power-panel-big" id="bigPower" hidden><span>蓄力</span><div class="big-track"><div class="big-fill" id="bigPowerFill"></div></div></div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
